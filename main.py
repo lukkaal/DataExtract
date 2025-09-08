@@ -1,7 +1,7 @@
 # main.py
-import json
+from langextract import io, providers
+
 from pipeline import extract_policy
-import langextract as lx
 
 if __name__ == "__main__":
     sample_text = """
@@ -78,15 +78,10 @@ if __name__ == "__main__":
 
     """
 
-    lx.providers.load_builtins_once()  
-  
-    # 查看可用的提供商  
-    providers = lx.providers.router.list_providers()  
-    # print("可用提供商:", providers)
+    providers.load_builtins_once()
 
     result = extract_policy(sample_text)
-    # print(json.dumps(result, ensure_ascii=False, indent=2))
 
-    # with open("policy_extraction_results.jsonl", "w", encoding="utf8") as fw:
-    #     fw.write(json.dumps(result, ensure_ascii=False) + "\n")
-    # print("保存：policy_extraction_results.jsonl")
+    io.save_annotated_documents(
+        [result], output_name="extraction_results.jsonl", output_dir="./outputs"
+    )

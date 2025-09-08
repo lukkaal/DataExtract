@@ -4,7 +4,7 @@
 # - text: the original raw policy text (used as ExampleData.text)
 # - extraction: lx.data.Extraction with extraction_text (raw) and data (structured fields)
 
-import langextract as lx
+from langextract import data
 
 policy_text_yueguan = """
 关于组织申报2024年度广东省基础与应用基础研究基金东莞市联合基金（粤莞联合基金）项目的通知
@@ -222,15 +222,18 @@ policy_text_yuefo = """
 # ]
 
 examples = [
-    lx.data.ExampleData(
+    data.ExampleData(
         text=policy_text_yueguan,
         extractions=[
-            lx.data.Extraction(
+            data.Extraction(
                 extraction_class="policy_document",
                 extraction_text=policy_text_yueguan,
                 attributes={
                     "policy_title": "关于组织申报2024年度广东省基础与应用基础研究基金东莞市联合基金（粤莞联合基金）项目的通知",
-                    "issuing_department": ["广东省基础与应用基础研究基金委员会", "东莞市科技局"],
+                    "issuing_department": [
+                        "广东省基础与应用基础研究基金委员会",
+                        "东莞市科技局",
+                    ],
                     "legal_basis": "粤基金函字〔2024〕58号 / 《关于共同实施广东省基础与应用基础研究基金东莞市联合基金（第二期）的协议书》",
                     "publish_date": "2024-12-10",
                     "effective_date": "2025-01-01",
@@ -242,7 +245,7 @@ examples = [
                         "2024年度省基金最多支持每个申请人立项1项；已获2024年度省自然科学基金项目立项者不得申报",
                         "在研主持省科技计划项目达到3项或已提交2项2024年度省科技计划项目申请者不得申报（平台类/普惠类等除外）",
                         "逾期一年未验收的省科技计划项目达到1项者不得申报（平台类/普惠性政策类、后补助类除外）",
-                        "存在科研诚信或严重失信行为的申请人不得申报"
+                        "存在科研诚信或严重失信行为的申请人不得申报",
                     ],
                     "application_deadline": "2025-01-14T17:00:00+08:00",
                     "submission_method": "广东省政务服务网 / 广东省科技业务管理阳光政务平台（http://pro.gdstc.gd.gov.cn/）在线申报",
@@ -250,13 +253,13 @@ examples = [
                         "申报书",
                         "依托单位科研诚信承诺函（加盖公章扫描件）",
                         "合作研究协议（如适用，盖章扫描件）",
-                        "涉及科技伦理/安全的审查意见等证明材料（如适用）"
+                        "涉及科技伦理/安全的审查意见等证明材料（如适用）",
                     ],
                     "project_types": [
                         "青年基金项目",
                         "地区培育项目",
                         "重点项目",
-                        "粤港澳研究团队项目"
+                        "粤港澳研究团队项目",
                     ],
                     "project_duration": "自2025-01-01起，终止时间按各类型资助期限填写",
                     "funding_management": "项目经费应符合广东省省级财政科研项目经费管理要求，并执行“负面清单+包干制”制度",
@@ -265,45 +268,52 @@ examples = [
                     "contact_info": [
                         {
                             "department": "省基金委",
-                            "phone": ["020-87584786", "020-87567870", "020-87567835", "020-87567807"],
+                            "phone": [
+                                "020-87584786",
+                                "020-87567870",
+                                "020-87567835",
+                                "020-87567807",
+                            ],
                             "email": [],
-                            "note": "指南业务咨询: 金文敏、王倩；申报业务咨询: 陈佳思、周晓燕"
+                            "note": "指南业务咨询: 金文敏、王倩；申报业务咨询: 陈佳思、周晓燕",
                         },
                         {
                             "department": "东莞市科技局",
                             "phone": ["0769-22831340"],
                             "email": [],
-                            "note": "基础研究与社会发展科技科：黄培锟"
+                            "note": "基础研究与社会发展科技科：黄培锟",
                         },
                         {
                             "department": "阳光政务平台技术支持",
                             "phone": ["020-83163338"],
                             "email": [],
-                            "note": ""
-                        }
+                            "note": "",
+                        },
                     ],
                     "attachments": [
                         "2024年度粤莞联合基金青年基金项目申报指南",
                         "2024年度粤莞联合基金地区培育项目申报指南",
                         "2024年度粤莞联合基金重点项目申报指南",
-                        "2024年度粤莞联合基金粤港澳研究团队项目申报指南"
+                        "2024年度粤莞联合基金粤港澳研究团队项目申报指南",
                     ],
                     "source_url": "https://gdstc.gd.gov.cn/pro/tzgg/content/post_4614013.html",
-                    "metadata": {"raw_text_spans": {}}
-                }
+                    "metadata": {"raw_text_spans": {}},
+                },
             )
-        ]
+        ],
     ),
-
-    lx.data.ExampleData(
+    data.ExampleData(
         text=policy_text_yuefo,
         extractions=[
-            lx.data.Extraction(
+            data.Extraction(
                 extraction_class="policy_document",
                 extraction_text=policy_text_yuefo,
                 attributes={
                     "policy_title": "关于组织申报2024年度广东省基础与应用基础研究基金佛山市联合基金（粤佛联合基金）项目的通知",
-                    "issuing_department": ["广东省基础与应用基础研究基金委员会", "佛山市科技局"],
+                    "issuing_department": [
+                        "广东省基础与应用基础研究基金委员会",
+                        "佛山市科技局",
+                    ],
                     "legal_basis": "粤基金函字〔2024〕57号 / 《广东省基础与应用基础研究基金佛山市联合基金（第二期）协议书》",
                     "publish_date": "2024-12-10",
                     "effective_date": "2025-01-01",
@@ -315,7 +325,7 @@ examples = [
                         "2024年度省基金最多支持每个申请人立项1项；已获2024年度省自然科学基金项目立项者不得申报",
                         "在研主持省科技计划项目达到3项或已提交2项2024年度省科技计划项目申请者不得申报（平台类/普惠类等除外）",
                         "逾期一年未验收的省科技计划项目达到1项者不得申报（平台类/普惠类等除外）",
-                        "有省级科技计划严重失信记录者不得申报"
+                        "有省级科技计划严重失信记录者不得申报",
                     ],
                     "application_deadline": "2025-01-14T17:00:00+08:00",
                     "submission_method": "广东省政务服务网 / 广东省科技业务管理阳光政务平台（http://pro.gdstc.gd.gov.cn/）在线申报",
@@ -324,13 +334,13 @@ examples = [
                         "依托单位科研诚信承诺函（加盖公章扫描件）",
                         "合作研究协议（如适用，盖章扫描件）",
                         "涉及科技伦理/安全的审查意见等证明材料（如适用）",
-                        "境外人员知情同意函（如适用）"
+                        "境外人员知情同意函（如适用）",
                     ],
                     "project_types": [
                         "青年基金项目",
                         "地区培育项目",
                         "重点项目",
-                        "粤港澳研究团队项目"
+                        "粤港澳研究团队项目",
                     ],
                     "project_duration": "起始统一填写2025-01-01，终止时间按各类型资助期限填写",
                     "funding_management": "经费使用须符合省级财政科研经费管理及“负面清单+包干制”相关规定",
@@ -339,36 +349,41 @@ examples = [
                     "contact_info": [
                         {
                             "department": "省基金委",
-                            "phone": ["020-87584786", "020-87567870", "020-87567835", "020-87567807"],
+                            "phone": [
+                                "020-87584786",
+                                "020-87567870",
+                                "020-87567835",
+                                "020-87567807",
+                            ],
                             "email": [],
-                            "note": "指南/申报业务咨询联系人: 金文敏、王倩、陈佳思、周晓燕"
+                            "note": "指南/申报业务咨询联系人: 金文敏、王倩、陈佳思、周晓燕",
                         },
                         {
                             "department": "佛山市科技局",
                             "phone": ["0757-83355841"],
                             "email": [],
-                            "note": "社会发展科技科：戴水祥"
+                            "note": "社会发展科技科：戴水祥",
                         },
                         {
                             "department": "阳光政务平台技术支持",
                             "phone": ["020-83163338"],
                             "email": [],
-                            "note": ""
-                        }
+                            "note": "",
+                        },
                     ],
                     "attachments": [
                         "2024年度粤佛联合基金青年基金项目申报指南",
                         "2024年度粤佛联合基金地区培育项目申报指南",
                         "2024年度粤佛联合基金重点项目申报指南",
-                        "2024年度粤佛联合基金粤港澳研究团队项目申报指南"
+                        "2024年度粤佛联合基金粤港澳研究团队项目申报指南",
                     ],
                     "source_url": "https://gdstc.gd.gov.cn/pro/tzgg/content/post_4614011.html",
                     "metadata": {"raw_text_spans": {}},
-                    "note": "主通知未在正文中公开具体资助总额或单项资助上限；这些通常在附件申报指南中给出。"
-                }
+                    "note": "主通知未在正文中公开具体资助总额或单项资助上限；这些通常在附件申报指南中给出。",
+                },
             )
-        ]
-    )
+        ],
+    ),
 ]
 
 # examples = [
