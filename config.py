@@ -1,37 +1,89 @@
 # config.py
-import langextract as lx
+import os
 
-MODEL_ID = "gpt-oss"  # 可以设置成 "gpt-4o" 或 provider 的模型 id
+from dotenv import load_dotenv
+from langextract import factory
+
+load_dotenv()
+
 MAX_WORKERS = 4
 DEBUG = False
 
 # 注册模型
-model_config = lx.factory.ModelConfig(
-    model_id="gpt-oss",
-    provider="openai",
-    provider_kwargs={
-        "base_url": "http://192.168.31.127:19090/v1",  # vLLM API 地址
-        "api_key": "gpustack_d402860477878812_9ec494a501497d25b565987754f4db8c",
-        "model_id": "gpt-oss"
-    }
-)
+model_configs = {
+    "gpt-oss": factory.ModelConfig(
+        model_id="gpt-oss",
+        provider="openai",
+        provider_kwargs={
+            "base_url": "http://192.168.31.127:19090/v1",  # vLLM API 地址
+            "api_key": os.getenv("VLLM_API_KEY"),
+        },
+    ),
+    "qwen-turbo": factory.ModelConfig(
+        model_id="qwen-turbo",
+        provider="openai",
+        provider_kwargs={
+            "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+            "api_key": os.getenv("DASHSCOPE_API_KEY"),
+        },
+    ),
+    "qwen-plus": factory.ModelConfig(
+        model_id="qwen-plus",
+        provider="openai",
+        provider_kwargs={
+            "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+            "api_key": os.getenv("DASHSCOPE_API_KEY"),
+        },
+    ),
+    "qwen-max": factory.ModelConfig(
+        model_id="qwen-max",
+        provider="openai",
+        provider_kwargs={
+            "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+            "api_key": os.getenv("DASHSCOPE_API_KEY"),
+        },
+    ),
+}
 
 # 统一字段定义
 REQUIRED_KEYS = [
-    "policy_title", "issuing_department", "publish_date", "effective_date",
-    "legal_basis", "applicability_scope", "eligibility_criteria",
-    "application_deadline", "submission_method", "materials_required",
-    "funding_amount_total", "funding_limit_per_project", "funding_source",
-    "disbursement_schedule", "evaluation_process", "contact_info", "source_url",
+    "policy_title",
+    "issuing_department",
+    "publish_date",
+    "effective_date",
+    "legal_basis",
+    "applicability_scope",
+    "eligibility_criteria",
+    "application_deadline",
+    "submission_method",
+    "materials_required",
+    "funding_amount_total",
+    "funding_limit_per_project",
+    "funding_source",
+    "disbursement_schedule",
+    "evaluation_process",
+    "contact_info",
+    "source_url",
     # 次要
-    "project_duration", "number_of_awards", "restrictions_and_conditions",
-    "attachments", "pilot_flag", "core_mechanism", "background_and_objectives",
-    "required_team_composition", "special_requirements", "normalization_notes",
+    "project_duration",
+    "number_of_awards",
+    "restrictions_and_conditions",
+    "attachments",
+    "pilot_flag",
+    "core_mechanism",
+    "background_and_objectives",
+    "required_team_composition",
+    "special_requirements",
+    "normalization_notes",
     # 低优先
-    "confidence", "key_clauses", "impact_summary", "self_funding_ratio",
-    "enforcement_and_penalties", "templates_and_forms",
+    "confidence",
+    "key_clauses",
+    "impact_summary",
+    "self_funding_ratio",
+    "enforcement_and_penalties",
+    "templates_and_forms",
     # metadata
-    "metadata"
+    "metadata",
 ]
 
 # Prompt 描述
@@ -66,5 +118,5 @@ SYNONYMS = {
     "申报方式": "submission_method",
     "申报材料": "materials_required",
     "附件": "attachments",
-    "资助经费": "funding_amount_total"
+    "资助经费": "funding_amount_total",
 }
