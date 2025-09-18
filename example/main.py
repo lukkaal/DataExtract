@@ -6,7 +6,7 @@ from prompt import POLICY_PARSE_PROMPT  # 引入规则Prompt
 
 # 初始化 Qwen API 客户端
 client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
+    api_key=os.getenv("DASHSCOPE_API_KEY"),
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
