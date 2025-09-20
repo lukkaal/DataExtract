@@ -8,5 +8,6 @@ dependencies = [
     "agno>=2.0.6",
     "langextract>=1.0.9",
     "openai>=1.106.1",
+    "python-dateutil>=2.9.0.post0",
     "tenacity>=9.1.2",
 ]
