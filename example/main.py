@@ -1,8 +1,11 @@
 import json
 import os
 
+from dotenv import load_dotenv
 from openai import OpenAI
 from prompt import POLICY_PARSE_PROMPT  # 引入规则Prompt
+
+load_dotenv(dotenv_path="../.env")
 
 # 初始化 Qwen API 客户端
 client = OpenAI(

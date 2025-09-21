@@ -11,7 +11,7 @@ from extraction import (
     TemporalInformation,
 )
 
-load_dotenv()
+load_dotenv(dotenv_path="../.env")
 
 
 def main():

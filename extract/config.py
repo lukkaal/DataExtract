@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from langextract import factory
 
-load_dotenv()
+load_dotenv(dotenv_path="../.env")
 
 MAX_WORKERS = 4
 DEBUG = False
