@@ -1,7 +1,7 @@
-import os
 import re
 
 from dateutil.parser import isoparse
+from llm import call_agent, model_configs
 from pydantic import BaseModel, Field
 from tenacity import (
     retry,
@@ -10,36 +10,10 @@ from tenacity import (
 )
 
 from agno.agent import Agent
-from agno.models.openai import OpenAILike
 
 
 class ExtractionError(Exception):
     pass
-
-
-model = OpenAILike(
-    id="qwen-turbo",
-    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-    api_key=os.getenv("DASHSCOPE_API_KEY"),
-)
-
-
-@retry(
-    stop=stop_after_attempt(10),
-    retry=retry_if_exception_type(ValueError),
-)
-def call_agent(agent: Agent, input: str, output_schema: type[BaseModel] | None = None):
-    if output_schema:
-        agent.output_schema = output_schema
-    else:
-        output_schema = agent.output_schema
-
-    output = agent.run(input).content
-
-    if not isinstance(output, output_schema):
-        raise ValueError("The output doesn't match output schema")
-
-    return output
 
 
 class Extraction:
@@ -62,12 +36,13 @@ class Extraction:
         self.retry_message = ""
         self.retry_count = 0
         self.agent = Agent(
-            model=model,
+            model=model_configs["qwen-turbo"],
             description=description or "你是一个专业的政策文件信息提取助手",
+            output_schema=output_schema,
             use_json_mode=True,
             add_history_to_context=True,
-            output_schema=output_schema,
-            # debug_mode=True,
+            cache_session=True,
+            debug_mode=True,
         )
 
     @retry(
@@ -82,6 +57,7 @@ class Extraction:
         output = call_agent(
             agent=self.agent,
             input=(self.policy_content if not self.retry_count else self.retry_message),
+            session_id="default",
         )
         # Validate the output that the agent generate
         try:
