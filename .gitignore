@@ -7,7 +7,7 @@ wheels/
 *.egg-info
 
 # Vscode
-.vscode/
+.vscode/settings.json
 
 # Misc
 .DS_Store
