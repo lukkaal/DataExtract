@@ -219,7 +219,9 @@ class TemporalInformation(Extraction):
             "publish_date": output.publish_date,
             "application_deadline": output.application_deadline,
             "effective_date": output.effective_start_date
-            + (f"/{output.effective_end_date}" if output.effective_end_date else ""),
+            + (f"/{output.effective_end_date}" if output.effective_end_date else "")
+            if output.effective_start_date
+            else None,
         }
 
 
