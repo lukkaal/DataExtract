@@ -20,6 +20,3 @@ wheels/
 
 # UV
 uv.lock
-
-# Outputs
-outputs/
