@@ -8,46 +8,30 @@
 方案一：使用 `langextract` 从政策文件中提取信息
 ```bash
 cd extract
-python main.py
+# 使用`-f`/`--file`指定`inputs/`下的政策文件名
+python main.py --file=policy1
 ```
-结果会被保存到 `outputs/` 中的 `extract-result.jsonl`
+结果会被保存到 `outputs/extract/` 下
 ```bash
 python visualize.py
 ```
-`visualize.py` 会将结果 `extract-result.jsonl` 转换成 `visualization.html` 以可视化的形式展示
+`visualize.py` 会将结果转换成 `visualization.html` 以可视化的形式展示
 
 
 ## Example
 方案二：直接利用OpenAI SDK，通过设置Prompt的方式从政策文件中提取信息
 ```bash
 cd example
-python main.py
+# 使用`-f`/`--file`指定`inputs/`下的政策文件名
+python main.py --file=policy1
 ```
-结果会被保存到 `outputs/` 中的  `example-result.json` 中
+结果会被保存到 `outputs/example` 下
 
 ## Agno
-方案三：在方案二的基础上利用`Agno`(一个Agent框架)按照信息类别分多次提取政策信息
-```python
-class BasicInformation(Extraction):
-    """政策基础信息信息"""
-
-class TemporalInformation(Extraction):
-    """政策时间信息"""
-
-class EligibilityInformation(Extraction):
-    """申请资格与条件信息"""
-
-class ApplicationProcessInformation(Extraction):
-    """申请流程信息"""
-
-class FundingInformation(Extraction):
-    """资金信息"""
-
-class ContactInformation(Extraction):
-    """联系方式信息"""
-```
+方案三：在方案二的基础上利用`Agno`(一个Agent框架)按照信息类别分多次提取政策信息，相关技术文档[agno.md](docs/agno.md)。
 ```bash
 cd agno
-python main.py
+# 使用`-f`/`--file`指定`inputs/`下的政策文件名
+python main.py --file=policy1
 ```
-结果会被保存到 `outputs/` 中的  `agno-result.json` 中
+结果会被保存到 `outputs/agno/` 下
