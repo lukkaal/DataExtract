@@ -1,5 +1,7 @@
+import argparse
 import json
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -13,10 +15,14 @@ client = OpenAI(
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
 )
 
+input_path = Path("../inputs")
+output_path = Path("../outputs/example")
 
-def main():
+
+def main(args):
     # 从当前文件夹读取政策原文
-    input_file = "../inputs/policy1.txt"
+    input_file = input_path / f"{args.file}.txt"
+    output_file = output_path / f"{args.file}.json"
     if not os.path.exists(input_file):
         raise FileNotFoundError(
             f"未找到 {input_file} 文件，请在当前目录下创建该文件并填入政策原文。"
@@ -48,9 +54,12 @@ def main():
         parsed_result = {"raw_output": result}
 
     # 保存为规整的 JSON 文件
-    with open("../outputs/example-result.json", "w", encoding="utf-8") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(parsed_result, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", type=str, default="policy1")
+    args = parser.parse_args()
+    main(args)

@@ -1,3 +1,4 @@
+import argparse
 import json
 from pathlib import Path
 
@@ -13,10 +14,14 @@ from extraction import (
 
 load_dotenv(dotenv_path="../.env")
 
+input_path = Path("../inputs")
+output_path = Path("../outputs/agno")
 
-def main():
-    policy_file = Path("../inputs/policy1.txt")
-    result_file = Path("../outputs/agno-result.json")
+
+def main(args):
+    policy_file = input_path / f"{args.file}.txt"
+    result_file = output_path / f"{args.file}.json"
+
     policy_content = policy_file.read_text(encoding="utf-8")
 
     policy_infos = {}
@@ -40,4 +45,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", type=str, default="policy1")
+    args = parser.parse_args()
+    main(args)
