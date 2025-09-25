@@ -5,7 +5,7 @@
   >**Note**: 不要直接将API-KEY写到源代码中，会造成API-KEY泄漏!!!
 
 ## Extract
-方案一：使用 `langextract` 从政策文件中提取信息
+方案一：使用 `langextract` 从政策文件中提取信息，相关文档 [langextract.md](docs/langextract.md)
 ```bash
 cd extract
 # 使用`-f`/`--file`指定`inputs/`下的政策文件
@@ -19,7 +19,7 @@ python visualize.py
 
 
 ## Example
-方案二：直接利用OpenAI SDK，通过设置Prompt的方式从政策文件中提取信息
+方案二：直接利用OpenAI SDK，通过设置Prompt的方式从政策文件中提取信息，相关文档 [llm.md](docs/llm.md)
 ```bash
 cd example
 # 使用`-f`/`--file`指定`inputs/`下的政策文件
