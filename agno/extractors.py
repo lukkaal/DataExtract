@@ -378,6 +378,9 @@ class ContactInformation(Extractor):
                 "`contact_persons`中列出的联系方式与`contact_methods`中列出的联系方式不匹配请重新整理"
             )
 
+        if retry_messages:
+            raise ExtractError("\n".join(retry_messages))
+
         return output
 
     def normalize(self, output: OutputSchema) -> dict:
