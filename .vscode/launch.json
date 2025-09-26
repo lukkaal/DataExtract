@@ -12,6 +12,15 @@
             "cwd": "${fileDirname}",
             "console": "integratedTerminal",
             "args": [ "${input:programArgs}" ]
+        },
+        {
+            "name": "Agno Debugger",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/agno/main.py",
+            "cwd": "${workspaceFolder}/agno",
+            "console": "integratedTerminal",
+            "args": [ "${input:programArgs}" ]
         }
     ],
     "inputs": [
