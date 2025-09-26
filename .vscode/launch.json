@@ -14,6 +14,24 @@
             "args": [ "${input:programArgs}" ]
         },
         {
+            "name": "Extract Debugger",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/extract/main.py",
+            "cwd": "${workspaceFolder}/extract",
+            "console": "integratedTerminal",
+            "args": [ "${input:programArgs}" ]
+        },
+        {
+            "name": "LLM Debugger",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/llm/main.py",
+            "cwd": "${workspaceFolder}/llm",
+            "console": "integratedTerminal",
+            "args": [ "${input:programArgs}" ]
+        },
+        {
             "name": "Agno Debugger",
             "type": "debugpy",
             "request": "launch",
