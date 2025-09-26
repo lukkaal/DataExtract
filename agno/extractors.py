@@ -322,7 +322,7 @@ class ContactInformation(Extractor):
             default={},
             description="`contact_methods`中每个联系方式对应的部门, 如果没有填None",
         )
-        contact_notes: dict[str, str | None] = Field(
+        contact_infos: dict[str, str | None] = Field(
             default={},
             description="`contact_methods`中每个联系方式对应的说明, 如果没有填None",
         )
@@ -337,7 +337,7 @@ class ContactInformation(Extractor):
                 contact_details += (
                     f"{contact}: "
                     f"{self.contact_departments.get(contact, None)}, "
-                    f"{self.contact_notes.get(contact, None)}, "
+                    f"{self.contact_infos.get(contact, None)}, "
                     f"{self.contact_persons.get(contact, None)}\n"
                 )
 
@@ -353,14 +353,14 @@ class ContactInformation(Extractor):
                 "在`contact_methods`中列出文件中提及的所有联系方式(电话/邮件)\n"
                 "在`contact_departments`中列出`contact_methods`中的这些联系方式对应的部门\n"
                 "在`contact_persons`中列出`contact_methods`中的这些联系方式对应的负责人\n"
-                "在`contact_notes`中列出`contact_methods`中的这些联系方式对应的说明\n"
+                "在`contact_infos`中列出`contact_methods`中的这些联系方式对应的说明\n"
             ),
         )
 
     def validate(self, output: OutputSchema) -> OutputSchema:
         contact_methods = output.contact_methods
         contact_departments = output.contact_departments
-        contact_notes = output.contact_notes
+        contact_infos = output.contact_infos
         contact_persons = output.contact_persons
 
         retry_messages = []
@@ -369,9 +369,9 @@ class ContactInformation(Extractor):
             retry_messages.append(
                 "`contact_departments`中列出的联系方式与`contact_methods`中列出的联系方式不匹配请重新整理"
             )
-        if contact_methods != contact_notes.keys():
+        if contact_methods != contact_infos.keys():
             retry_messages.append(
-                "`contact_notes`中列出的联系方式与`contact_methods`中列出的联系方式不匹配请重新整理"
+                "`contact_infos`中列出的联系方式与`contact_methods`中列出的联系方式不匹配请重新整理"
             )
         if contact_methods != contact_persons.keys():
             retry_messages.append(
@@ -386,14 +386,14 @@ class ContactInformation(Extractor):
     def normalize(self, output: OutputSchema) -> dict:
         contacts = output.contact_methods
         departments = output.contact_departments
-        notes = output.contact_notes
+        infos = output.contact_infos
         persons = output.contact_persons
 
         return {
             "contact": {
                 contact: {
                     "department": departments.get(contact),
-                    "note": notes.get(contact),
+                    "info": infos.get(contact),
                     "person": persons.get(contact),
                 }
                 for contact in contacts

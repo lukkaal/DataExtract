@@ -74,7 +74,7 @@ class ContactInformation(Extractor):
    """联系方式信息"""
    contact_methods # 联系方式（电话/邮件）
    contact_departments # 联系部门
-   contact_notes # 联系说明
+   contact_infos # 联系说明
    contact_persons # 联系人员
 ```
 
