@@ -24,7 +24,7 @@ agno/
 3. 运行每个类的提取过程
 4. 组合结果并以 JSON 格式输出
 
-### 信息提取模块`extractors.py`
+### 信息提取模块 `extractors.py`
 
 #### 1. `Extractor` 基类
 
