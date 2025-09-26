@@ -12,11 +12,11 @@ from tenacity import (
 from agno.agent import Agent
 
 
-class ExtractionError(Exception):
+class ExtractError(Exception):
     pass
 
 
-class Extraction:
+class Extractor:
     policy_content: str
     extract_result: dict
     agent: Agent
@@ -47,7 +47,7 @@ class Extraction:
 
     @retry(
         stop=stop_after_attempt(10),
-        retry=retry_if_exception_type(ExtractionError),
+        retry=retry_if_exception_type(ExtractError),
         before_sleep=lambda rs: print(
             f"Extract Retry: {rs.attempt_number}: {rs.outcome.exception()}"
         ),
@@ -63,7 +63,7 @@ class Extraction:
         try:
             output = self.validate(output)
             print(output)
-        except ExtractionError as e:
+        except ExtractError as e:
             self.retry_count += 1
             self.retry_message = str(e)
             print(f"Validate policy information output error:{e}")
@@ -81,7 +81,7 @@ class Extraction:
         return output.model_dump()
 
 
-class BasicInformation(Extraction):
+class BasicInformation(Extractor):
     class OutputSchema(BaseModel):
         policy_title: str | None = Field(
             description="政策标题：公告/文件的正式名称",
@@ -140,12 +140,12 @@ class BasicInformation(Extraction):
                     )
 
         if retry_messages:
-            raise ExtractionError("\n".join(retry_messages))
+            raise ExtractError("\n".join(retry_messages))
 
         return output
 
 
-class TemporalInformation(Extraction):
+class TemporalInformation(Extractor):
     class OutputSchema(BaseModel):
         publish_date: str | None = Field(
             description="发布时间：文档发布时间",
@@ -210,7 +210,7 @@ class TemporalInformation(Extraction):
             )
 
         if retry_messages:
-            raise ExtractionError("\n".join(retry_messages))
+            raise ExtractError("\n".join(retry_messages))
 
         return output
 
@@ -225,7 +225,7 @@ class TemporalInformation(Extraction):
         }
 
 
-class EligibilityInformation(Extraction):
+class EligibilityInformation(Extractor):
     class OutputSchema(BaseModel):
         applicability_scope: list[str] | None = Field(
             description="适用范围：适用单位/对象的简述",
@@ -250,7 +250,7 @@ class EligibilityInformation(Extraction):
         return output
 
 
-class ApplicationProcessInformation(Extraction):
+class ApplicationProcessInformation(Extractor):
     class OutputSchema(BaseModel):
         submission_method: list[str] | None = Field(
             description="申报方式：申报/办理方式与平台，含平台名、URL、线下流程等",
@@ -279,7 +279,7 @@ class ApplicationProcessInformation(Extraction):
         return output
 
 
-class FundingInformation(Extraction):
+class FundingInformation(Extractor):
     class OutputSchema(BaseModel):
         funding_amount_total: str | None = Field(
             description="资金总额：若披露，数值与币种分离（例如：100CNY）",
@@ -312,7 +312,7 @@ class FundingInformation(Extraction):
         return output
 
 
-class ContactInformation(Extraction):
+class ContactInformation(Extractor):
     class OutputSchema(BaseModel):
         contact_methods: list[str] = Field(
             default=[],

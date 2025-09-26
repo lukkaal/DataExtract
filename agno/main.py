@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 from dotenv import load_dotenv
-from extraction import (
+from extractors import (
     ApplicationProcessInformation,
     BasicInformation,
     ContactInformation,
@@ -26,7 +26,7 @@ def main(args):
 
     policy_infos = {}
 
-    extraction_classes = [
+    extractor_classes = [
         BasicInformation,
         TemporalInformation,
         EligibilityInformation,
@@ -35,9 +35,9 @@ def main(args):
         ContactInformation,
     ]
 
-    for extraction_class in extraction_classes:
-        extraction = extraction_class(policy_content)
-        output = extraction.extract()
+    for extractor_class in extractor_classes:
+        extractor = extractor_class(policy_content)
+        output = extractor.extract()
         policy_infos.update(output)
 
     with open(result_file, "w", encoding="utf-8") as f:
