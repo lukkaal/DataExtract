@@ -16,7 +16,7 @@ client = OpenAI(
 )
 
 input_path = Path("../inputs")
-output_path = Path("../outputs/example")
+output_path = Path("../outputs/llm")
 
 
 def main(args):

@@ -21,11 +21,11 @@ python visualize.py
 ## 方案二：LLM
 利用 OpenAI SDK 直接调用 LLM，通过设置Prompt的方式从政策文件中提取信息，方案文档 [llm.md](docs/llm.md)。
 ```bash
-cd example
+cd llm
 # 使用`-f`/`--file`指定`inputs/`下的政策文件
 python main.py --file=policy1
 ```
-结果会被保存到 `outputs/example` 下
+结果会被保存到 `outputs/llm` 下
 
 ## 方案三：Agno
 在方案二的基础上使用智能体框架 ([Agno](https://www.agno.com/))， 按照信息类别，分多次从政策文件中提取信息，方案文档 [agno.md](docs/agno.md)。
